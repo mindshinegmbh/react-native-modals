@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
 });
 
 type ModalState =
- | typeof MODAL_OPENING
- | typeof MODAL_OPENED
- | typeof MODAL_CLOSING
- | typeof MODAL_CLOSED
+  | typeof MODAL_OPENING
+  | typeof MODAL_OPENED
+  | typeof MODAL_CLOSING
+  | typeof MODAL_CLOSED
 
 type State = {
   modalAnimation: Animation;
@@ -78,19 +78,19 @@ class BaseModal extends Component<ModalProps, State> {
     modalStyle: null,
     width: null,
     height: null,
-    onTouchOutside: () => {},
+    onTouchOutside: () => { },
     onHardwareBackPress: () => false,
     hasOverlay: true,
     overlayOpacity: 0.5,
     overlayPointerEvents: null,
     overlayBackgroundColor: '#000',
-    onShow: () => {},
-    onDismiss: () => {},
+    onShow: () => { },
+    onDismiss: () => { },
     footer: null,
-    onMove: () => {},
-    onSwiping: () => {},
-    onSwipeRelease: () => {},
-    onSwipingOut: () => {},
+    onMove: () => { },
+    onSwiping: () => { },
+    onSwipeRelease: () => { },
+    onSwipingOut: () => { },
     useNativeDriver: true,
   }
 
@@ -230,51 +230,35 @@ class BaseModal extends Component<ModalProps, State> {
         }}
       >
         <View style={[styles.container, hidden]}>
-          <DraggableView
-            style={StyleSheet.flatten([styles.draggableView, style])}
-            onMove={this.handleMove}
-            onSwiping={onSwiping}
-            onRelease={onSwipeRelease}
-            onSwipingOut={this.handleSwipingOut}
-            onSwipeOut={onSwipeOut}
-            swipeDirection={swipeDirection}
-            swipeThreshold={swipeThreshold}
-          >
-            {({ pan, onLayout }) => (
-              <Fragment>
-                <Backdrop
-                  ref={(ref) => {
-                    this.backdrop = ref;
-                  }}
-                  pointerEvents={this.pointerEvents}
-                  visible={overlayVisible}
-                  onPress={onTouchOutside}
-                  backgroundColor={overlayBackgroundColor}
-                  opacity={overlayOpacity}
-                  animationDuration={animationDuration}
-                  useNativeDriver={useNativeDriver}
-                />
-                <Animated.View
-                  style={pan.getLayout()}
-                  onLayout={onLayout}
-                >
-                  <Animated.View
-                    style={[
-                      styles.modal,
-                      round,
-                      this.modalSize,
-                      modalStyle,
-                      modalAnimation.getAnimations(),
-                    ]}
-                  >
-                    {modalTitle}
-                    {children}
-                    {footer}
-                  </Animated.View>
-                </Animated.View>
-              </Fragment>
-            )}
-          </DraggableView>
+          <View style={StyleSheet.flatten([styles.draggableView, style])}>
+            <Fragment>
+              <Backdrop
+                ref={(ref) => {
+                  this.backdrop = ref;
+                }}
+                pointerEvents={this.pointerEvents}
+                visible={overlayVisible}
+                onPress={onTouchOutside}
+                backgroundColor={overlayBackgroundColor}
+                opacity={overlayOpacity}
+                animationDuration={animationDuration}
+                useNativeDriver={useNativeDriver}
+              />
+              <Animated.View
+                style={[
+                  styles.modal,
+                  round,
+                  this.modalSize,
+                  modalStyle,
+                  modalAnimation.getAnimations(),
+                ]}
+              >
+                {modalTitle}
+                {children}
+                {footer}
+              </Animated.View>
+            </Fragment>
+          </View>
         </View>
       </ModalContext.Provider>
     );
